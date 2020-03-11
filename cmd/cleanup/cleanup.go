@@ -39,8 +39,16 @@ func normalize(fields []string) []string {
 	deaths := fields[4]
 	recovered := fields[5]
 
+	var lat, lng string
+	if len(fields) > 6 {
+		lat = fields[6]
+		lng = fields[7]
+	} else {
+		lat = ""
+		lng = ""
+	}
 	var r []string
-	r = append(r, province, country, lastUpdate, confirmed, deaths, recovered)
+	r = append(r, province, country, lastUpdate, confirmed, deaths, recovered, lat, lng)
 	return r
 }
 
