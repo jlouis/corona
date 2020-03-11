@@ -6,7 +6,7 @@ in with pkgs; {
     name = "myProject";
     version = "1";
     src = if pkgs.lib.inNixShell then null else nix;
-    
+
     buildInputs = with rPackages; [
       R
       curl
@@ -14,6 +14,7 @@ in with pkgs; {
       openssl
       tidyverse
       jsonlite
+      fs
     ];
   };
 }
