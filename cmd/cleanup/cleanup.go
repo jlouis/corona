@@ -87,7 +87,17 @@ func main() {
 	defer w.Flush()
 
 	// Header
-	w.Write(records[0])
+	header := []string{
+		"Province/State",
+		"Country/Region",
+		"Last Update",
+		"Confirmed",
+		"Deaths",
+		"Recovered",
+		"Latitude",
+		"Longitude",
+	}
+	w.Write(header)
 	records = records[1:]
 
 	for i := range records {
