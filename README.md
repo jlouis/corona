@@ -10,11 +10,13 @@ Go program for cleaning up the JHU dataset.
 
 The data are in a pretty bad shape:
 
-* CSV files contains byte-order marks. This is not useful.
+* CSV files contains byte-order marks. This doesn't make sense for CSV files.
 * There are files with CRLF and LF endings in here, making the data set inconsistent.
 * There are 3 ways of representing dates, none of which are standard.
+* Some files contains lat/long coordinate data, and some don't.
+* Some fields have no whitespace trimming.
 
-The program runs through the lines and normalizes them. In particular, it represents time stamps as RFC3339.
+The program runs through the lines and normalizes them. In particular, it represents time stamps as RFC3339 (UTC), which should remove most problems with date parsing.
 
 
 
