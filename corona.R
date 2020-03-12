@@ -18,11 +18,18 @@ raw <- csv_files %>% set_names() %>%
     confirmed = `Confirmed`, deaths = `Deaths`, recovered = `Recovered`, lat = `Latitude`, lng = `Longitude`)
 
 # Note the data is already tidy. So we don't have to do anything ekstra with the data.
+
+# Find Denmark in the haystack
 dk <- raw %>% filter(country == "Denmark") %>% filter(is.na(province) | province == "Denmark")
 
-p <- ggplot(dk, aes(x=as_date(date)-today(), y=confirmed))
+# Order denmark by date, add rate computation for how much it increases per day
+dk <- dk %>% arrange(date) %>% mutate(diff.day = date - lag(date),
+                                      diff.rate = (confirmed - lag(confirmed)) / lag(confirmed))
+
+# Plot
+p <- ggplot(dk, aes(x=date, y=diff.rate))
 p + geom_point() +
-    geom_smooth(method="loess", formula = (y ~ x)) +
+    geom_smooth(method="lm", formula = (y ~ x), se=FALSE) +
     scale_y_log10()
 
 ggsave("dk.pdf", height=5, width=8)
